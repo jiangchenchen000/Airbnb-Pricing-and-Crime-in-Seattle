@@ -198,3 +198,73 @@ In data view page, we first provide users with a view of the dataset we used to 
 
 ### Docker Service
 
+A docker image is provided for better compatibility and convenience is applying our prediction model. A step-by-step instruction is provided here to build the docker image as well as run docker container from the image.
+
+1. Make sure the docker daemon is running
+
+2. Build docker image
+
+* Navigate to the working directory of the docker project (where the `Dockerfile` locates)
+
+* The orgnization of the dokcer service folder looks like:
+  * `Dockerfile` contains the instruction for building the docker image
+  * `data` folder contains dataset used for real-time statistical analysis and request generation
+  * `model` folder includes the trained model to provide prediction function
+  * `pages` folder contains extra Streamlit pages for the online application
+  * `prediction.py` is the main page of the online Streamlit application
+  * `requirements.txt` lists the required Python packages in buiding the docker image
+
+```shell
+./docker-project
+├── Dockerfile
+├── data
+│   ├── default_input.csv
+│   └── listing_primary.csv
+├── model
+│   └── model.joblib
+├── pages
+│   └── data_exploration.py
+├── prediction.py
+└── requirements.txt
+
+3 directories, 7 files
+```
+
+* Run the following instruction to build the docker image:
+
+```shell
+docker build . -t cs6220/docker-project
+```
+
+* It will take a while for the docker image to be built. The name of our docker image will be `cs6220/docker-project`
+
+
+
+3. Run docker container from the image we just built using following command:
+
+```shell
+docker run -d -p 8501:8501 --name airbnb-prediction cs6220/docker-project:latest
+```
+
+* Navigate to `localhost:8501` to access the Streamlit application of the docker service.
+
+* Log trace example when running docker container for the applicaiton may look like:
+
+```shell
+✗ docker images
+REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
+cs6220/docker-project   latest    ce65b277909d   20 seconds ago   1.06GB
+
+✗ docker run -d -p 8501:8501 --name airbnb-prediction cs6220/docker-project:latest
+2b023d5c36f1618bc6dc84f2f158979846a163bb65adfdd96fe2b578a7524679
+
+✗ docker ps
+CONTAINER ID   IMAGE                          COMMAND                  CREATED         STATUS         PORTS                    NAMES
+2b023d5c36f1   cs6220/docker-project:latest   "streamlit run predi…"   4 seconds ago   Up 3 seconds   0.0.0.0:8501->8501/tcp   airbnb-prediction
+
+✗ docker stop airbnb-prediction
+airbnb-prediction
+```
+
+
+
