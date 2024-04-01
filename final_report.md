@@ -18,7 +18,7 @@ Our analysis will mainly rely on Airbnb listings. To gain a comprehensive unders
 
 
 
-
+![workflow](./assets/workflow.png)
 
 > workflow summary
 
@@ -95,11 +95,11 @@ flowchart LR
     B -- No ------> E[End]
 ```
 
-**In summary,  propotions of missing values are counted and missing values are dropped before we diving deeper.**
+In summary,  about 20% of records has missing values and were dropped before we diving deeper.
 
+![image-20240401151201986](assets/image-20240401151201986.png)
 
-
-> Overview of the dataset after missing values were droped
+> Overview of the dataset after missing values were dropped
 
 
 
@@ -112,7 +112,7 @@ At this point, missing values are either filled with information extracted from 
 
 Finally, our dataset for training the regression model includes 100 columns with 8500+ valid records. A brief summary of the dataset is listed below:
 
-
+![image-20240401151247372](assets/image-20240401151247372.png)
 
 > Overview of the dataset we used to train the model
 
@@ -124,7 +124,7 @@ Finally, our dataset for training the regression model includes 100 columns with
 
 Before moving into training the regression model using cleaned dataset, we first applied some intuitive analysis of the data. Interestingly, we observe some outliers in feature `price`: a few of rooms seem have incredibly high rental price. Further analysis showed that the upper quartile of `price` is `$187`, while the max price is `$10000`. Notably, only 6 rooms had price higher than `$4000`. Therefore, we identify rooms with price higher than `$4000` as outliers and removed them for model training. After removing the outliers, the highest price of rooms is `$3071`. However, it's reasonable because the house is prepared for up to 15 people!
 
-
+<img src="./assets/data_range.png" alt="data_range" style="zoom:67%;" />
 
 > Data range
 
@@ -134,7 +134,11 @@ Before moving into training the regression model using cleaned dataset, we first
 
 We next analyzed the possible relations between our selected features (both numerical and categorical features) and the price. As for numerical features (accommodates, bedrooms, beds, bathrooms, rating), though not so obvious, it seems that these features do have some relations to the price. However, it's hard to tell whether the price is influenced by the area of the house from the chart we have here. As for room and bath types, it seems that shared bedrooms or bathrooms are a little more inexpensive than the standard type.
 
-* Figure: relation analysis
+
+
+![pre_relation](assets/pre_relation.png)
+
+> Preliminary relation analysis
 
 
 
@@ -156,11 +160,31 @@ In evaluating our models, we analyzed the prediction error curve and residual er
 
 
 
-> Prediction error curve and residual error analysis
+![curve_linear](./assets/curve_linear.png)
+
+> Prediction error curve and residual error analysis for linear regression model
+
+
+
+![curve_rf](./assets/curve_rf.png)
+
+> Prediction error curve and residual error analysis for random-forest regression model
+
+
+
+![curve_gb](./assets/curve_gb.png)
+
+> Prediction error curve and residual error analysis for gradient boosted regression model
+
+
 
 Also, mean squared error (MSE), mean absolute error (MAE) and R-squared score were used to further evaluate these regression models. It turned out that gradient boosted regression model had the min MAE and MSE values, as well as the highest R-square value which is closest to 1, comparing to other two models.
 
 
+
+![image-20240401152205083](assets/image-20240401152205083.png)
+
+![model_error](./assets/model_error.png)
 
 > MSE, MAE and R-squared score among three regression models
 
@@ -184,6 +208,8 @@ In prediction page, users will provide all 8 features in predicting the ideal pr
 
 
 
+![st_prediction](./assets/st_prediction.png)
+
 > Overview of the prediction page in our online Streamlit application
 
 
@@ -191,6 +217,8 @@ In prediction page, users will provide all 8 features in predicting the ideal pr
 In data view page, we first provide users with a view of the dataset we used to train our model. For better readability, we did not show the dataset in one-hot encoding, which was actually used to train the model. Categorical features are showed in their own columns. Next, the range of the numeric features are showed to give information about rental types commonly provided in Seattle area. Moreover, relational analysis among single feature and the price were provide for an intuitive view.
 
 
+
+<img src="./assets/st_data.png" alt="st_data" style="zoom: 25%;" />
 
 > Overview of the data exploration page in our online Streamlit application
 
@@ -267,4 +295,16 @@ airbnb-prediction
 ```
 
 
+
+## Reference
+
+* Dataset for training the model was dirived from [Seattle Airbnb Activity](http://insideairbnb.com/seattle/ )
+* scikit-learn:
+  - [LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html)
+  - [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
+  - [GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)
+* [Streamlit](https://streamlit.io/)
+* [Docker](https://www.docker.com/)
+* [GitHub repository](https://github.com/jiangchenchen000/Urban-Analytics-Crime-Community-Service-and-Airbnb-Pricing-in-Seattle) of our project
+* [Online Streamlit application](https://airbnb-pricing.streamlit.app/)
 
