@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 ############ Const & Config ############
-MODEL_PATH = './model/rf_model.joblib'
+MODEL_PATH = './model/model.joblib'
 DATA_PATH = './data/default_input.csv'
 NBR = ['Adams', 'Alki', 'Arbor Heights', 'Atlantic', 'Belltown', 'Bitter Lake', 'Briarcliff', 'Brighton', 'Broadview', 'Broadway', 'Bryant', 'Cedar Park', 'Central Business District', 'Columbia City', 'Crown Hill', 'Dunlap', 'East Queen Anne', 'Eastlake', 'Fairmount Park', 'Fauntleroy', 'First Hill', 'Fremont', 'Gatewood', 'Genesee', 'Georgetown', 'Green Lake', 'Greenwood', 'Haller Lake', 'Harbor Island', 'Harrison/Denny-Blaine', 'High Point', 'Highland Park', 'Holly Park', 'Industrial District', 'Interbay', 'International District', 'Laurelhurst', 'Lawton Park', 'Leschi', 'Lower Queen Anne', 'Loyal Heights', 'Madison Park', 'Madrona', 'Mann', 'Maple Leaf', 'Matthews Beach', 'Meadowbrook', 'Mid-Beacon Hill', 'Minor', 'Montlake', 'Mount Baker', 'North Admiral', 'North Beach/Blue Ridge', 'North Beacon Hill', 'North College Park', 'North Delridge', 'North Queen Anne', 'Olympic Hills', 'Phinney Ridge', 'Pike-Market', 'Pinehurst', 'Pioneer Square', 'Portage Bay', 'Rainier Beach', 'Rainier View', 'Ravenna', 'Riverview', 'Roosevelt', 'Roxhill', 'Seaview', 'Seward Park', 'South Beacon Hill', 'South Delridge', 'South Lake Union', 'South Park', 'Southeast Magnolia', 'Stevens', 'Sunset Hill', 'University District', 'Victory Heights', 'View Ridge', 'Wallingford', 'Wedgwood', 'West Queen Anne', 'West Woodland', 'Westlake', 'Whittier Heights', 'Windermere', 'Yesler Terrace']
 RT_PRE = 'room_type_'
@@ -50,7 +50,7 @@ with bedroom_col1:
 
 # bedroom number
 with bedroom_col2:
-    bedroom_input = st.slider('Bedrooms', 1, 12, 1)
+    bedroom_input = st.slider('Bedrooms', 0, 12, 1)
 
 # bed number
 with bedroom_col3:
@@ -66,7 +66,7 @@ with bathroom_col1:
 
 # bathroom number
 with bathroom_col2:
-    bathroom_input = st.slider('Bathrooms', 1, 15, 1)
+    bathroom_input = st.slider('Bathrooms', 0, 15, 1)
 
 
 ############ Review rating information ############
