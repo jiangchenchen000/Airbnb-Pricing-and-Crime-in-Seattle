@@ -1,10 +1,10 @@
 # Airbnb Pricing in Seattle
 
-Group members: 
+Group members: Chenchen Jiang, Hui Du, Jianjian Liu, Jiayang Liu
 
 
 
-**Abstract**: 
+**Abstract**: In this project, we analyzed the relationships between consumer concerned features (accommodates, bedroom number, bathroom number, beds number, review rating score, neighborhood, room type and bathroom type) and Airbnb rental price using three different regression models. Raw dataset from Airbnb was cleansed by replacing and dropping missing values, and categorical features were converted into one-hot encoding format. We found that gradient boosted model shown best preformance by evaluating all trained models using parameters including MSE, MAE, R2 and residual curve. Furthermore, to provide user-friendly interface in applying our model, an online application was build by Streamlit, and we also generated a docker image for our applicaiton. In summary, this project represents an innovative and beneficial use of data science as it empowers residents and visitors to make data-informed decisions regarding their accommodation choices, thus, enhancing the living and travel experience in the Seattle area.
 
 
 
@@ -24,9 +24,7 @@ Our analysis will mainly rely on Airbnb listings. To gain a comprehensive unders
 
 
 
-In conclusion, we trained the regression model empowered by random-forest method, which showed acceptable performance in predicting the rental price. In addition, we provided the UI by Streamlit, as well as dockerized service to allow users get access to our model.
-
-In summary, this project represents an innovative and beneficial use of data science because it seeks to intersect public safety with economic insights by correlating crime rates and emergency food services with Airbnb pricing dynamics in Seattle. 
+In conclusion, we trained three different regression models, which showed acceptable performance in predicting the rental price. In addition, we provided the UI by Streamlit, as well as dockerized service to allow users get access to our model.
 
 
 
@@ -97,9 +95,11 @@ flowchart LR
     B -- No ------> E[End]
 ```
 
-In summary, propotions of missing values are counted and missing values are dropped before we diving deeper.
+**In summary,  propotions of missing values are counted and missing values are dropped before we diving deeper.**
 
-* Figure: missing counts
+
+
+> Overview of the dataset after missing values were droped
 
 
 
@@ -110,9 +110,11 @@ At this point, missing values are either filled with information extracted from 
 - `price` has to be float type rather than string
 - Features including `neighbourhood`, `room_type` and `bath_type` are categorical data, we thus convert these values into one-hot encoding pattern.
 
-Finally, our dataset for training the regression model includes 100 columns with XXX valid rows. A brief summary of the dataset is listed below:
+Finally, our dataset for training the regression model includes 100 columns with 8500+ valid records. A brief summary of the dataset is listed below:
 
-* Figure: df.head()
+
+
+> Overview of the dataset we used to train the model
 
 
 
@@ -146,9 +148,25 @@ In training the regression model, dataset was splitted into training set (70%) a
 
 **Gradient boosted regression trees**: an ensemble learning method that builds a predictive model in a step-by-step manner. Different from the random-forest method, this model belongs to a stacking ensemble model. Therefore, we will use this model to make comparisons between different ensemble methods.
 
-In evaluating our models, we analyzed the prediction error curve and residual error among the three models. As a result, random-forest model was chosen for the real prediction work due to it's performance.
+In evaluating our models, we analyzed the prediction error curve and residual error among the three models. 
 
-* Figure: comparision among models (RSE, R-square)
+* As for linear regression model, the fitting level seemed not as well as the other two models in the training set but it performed well in testing set. However, the linear regression model seemed a llittle bit more "conservative " than the other two, since the range of the predicted price was more narrow as shown in the prediction error curve.
+* Intuitively, random-forest model showed best fit in the training set, however, its performance in testing set was compromised, comparing to the other two models. In this way, we think that over-fitting problem might occured when training with random-forest regression model.
+* Gradient boosted model performed very similar in predicting in both training and testing sets. It's not as "conservative" as the linear regression model in predicting the rentals with potentially higher prices. And its performance seemed to be more consistent between training and testing sets than the random-forest model.
+
+
+
+> Prediction error curve and residual error analysis
+
+Also, mean squared error (MSE), mean absolute error (MAE) and R-squared score were used to further evaluate these regression models. It turned out that gradient boosted regression model had the min MAE and MSE values, as well as the highest R-square value which is closest to 1, comparing to other two models.
+
+
+
+> MSE, MAE and R-squared score among three regression models
+
+
+
+As a result, gradient boosted regression model was chosen for the real prediction work due to it's best performance among the three models.
 
 
 
@@ -164,13 +182,17 @@ In the online Streamlit server we provided, a prediction page and data view page
 
 In prediction page, users will provide all 8 features in predicting the ideal price of the homestay they are looking for. Categorical features are presented using either Selectbox or Radio components provided by Streamlit API. While numeric features are presented using Slider for better user experience. The Slider component limits the values selected by users, thus saving the server from data validation. By clicking the `Predict` button, Streamlit will collect the user input values and then render the predicted price by running our trained model. As a result, dynamic values including user provided information and predicted ideal rental price will be shown using Metrics component.
 
-* Figure: prediction page
+
+
+> Overview of the prediction page in our online Streamlit application
 
 
 
 In data view page, we first provide users with a view of the dataset we used to train our model. For better readability, we did not show the dataset in one-hot encoding, which was actually used to train the model. Categorical features are showed in their own columns. Next, the range of the numeric features are showed to give information about rental types commonly provided in Seattle area. Moreover, relational analysis among single feature and the price were provide for an intuitive view.
 
-* Figure: data range
+
+
+> Overview of the data exploration page in our online Streamlit application
 
 
 

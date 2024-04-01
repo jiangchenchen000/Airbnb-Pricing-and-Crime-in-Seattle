@@ -17,6 +17,7 @@ st.markdown("# Predict Your Airbnb Price 🏡")
 st.divider()
 
 st.sidebar.markdown("# Prediction 🏡")
+st.sidebar.markdown("Predict you ideal Airbnb rental price using our regression model trained with real world data!")
 
 # load the trained model
 @st.cache_resource
@@ -105,7 +106,7 @@ if st.button("Predict", type='primary'):
         res_col11, res_col12, res_col13 = st.columns(3)
         res_col11.metric('Person(s)', f'{acm_input}')
         res_col12.metric(f'{rt_input}', f'{bedroom_input}')
-        res_col13.metric(f'{bt_input} bathroom', f'{bathroom_input}')
+        res_col13.metric(f'{bt_input} Bathroom', f'{bathroom_input}')
 
         res_col21, res_col22, res_col23 = st.columns(3)
         res_col21.metric('Area', f'{nbr_input}')
