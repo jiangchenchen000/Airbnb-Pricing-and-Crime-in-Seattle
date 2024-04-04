@@ -71,7 +71,7 @@ with bathroom_col2:
 
 
 ############ Review rating information ############
-rating_input = st.slider('Accommadates', 0.0, 5.0, 0.1)
+rating_input = st.slider('Rating Score', 0.0, 5.0, 0.1)
 
 
 ############ Wrap the input data and Predict price with the model ############
