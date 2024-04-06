@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import streamlit as st
+import plotly.express as px
+import geopandas as gpd
+
 
 ############ Const & Config ############
 DATA_PATH = './data/listing_primary.csv'
@@ -82,7 +86,31 @@ st.divider()
 
 ############ Data distribution ############
 st.markdown("## Data Distribution")
-st.markdown("Interested in the data distribution? You can view the distribution of the numeric features in our dataset be selecting the feature in the selectbox below!")
+st.markdown("Interested in the data distribution? You can hover around and see the average price of Airbnb in different neighborhood!")
+
+# Load the Seattle GeoJSON into a GeoDataFrame
+gdf = gpd.read_file('./data/listing_geo.geojson')
+
+# Convert the GeoDataFrame to a JSON format that Plotly can understand
+geojson = gdf.__geo_interface__
+
+# Create the choropleth map using Plotly Express
+fig = px.choropleth_mapbox(gdf, geojson=geojson, 
+                           locations=gdf.index, color="price",
+                           hover_name="neighborhood", 
+                           hover_data={"price": True}, 
+                           mapbox_style="carto-positron", 
+                           center={"lat": gdf.geometry.centroid.y.mean(), "lon": gdf.geometry.centroid.x.mean()},
+                           zoom=10,
+                           labels={"price": "Average Price ($)"}
+                          )
+
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title="Average Airbnb Prices by Neighborhood in Seattle")
+
+# Display the figure in Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("You can view the distribution of the numeric features in our dataset be selecting the feature in the selectbox below!")
 
 target = st.selectbox(
     "Select feature:",
@@ -93,6 +121,8 @@ if target:
     st.bar_chart(data_dis(df, target), x=target, y='count')
 
 st.divider()
+
+
 
 
 ############ Relations to price ############
