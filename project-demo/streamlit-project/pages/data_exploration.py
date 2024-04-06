@@ -86,16 +86,20 @@ st.divider()
 
 ############ Data distribution ############
 st.markdown("## Data Distribution")
-st.markdown("Interested in the data distribution? You can hover around and see the average price of Airbnb in different neighborhood!")
+st.markdown("Interested in the data distribution? You can hover around and see the Average Price of Airbnb and Crime Situation in different neighborhood!")
 
-# Load the Seattle GeoJSON into a GeoDataFrame
-gdf = gpd.read_file('./data/listing_geo.geojson')
+col1, col2 = st.columns(2)
 
-# Convert the GeoDataFrame to a JSON format that Plotly can understand
-geojson = gdf.__geo_interface__
+with col1:
+    st.subheader("Average Airbnb Prices by Neighborhood in Seattle")
 
-# Create the choropleth map using Plotly Express
-fig = px.choropleth_mapbox(gdf, geojson=geojson, 
+    # Load the Seattle GeoJSON into a GeoDataFrame 
+    gdf = gpd.read_file('./data/listing_geo.geojson')
+    # Convert the GeoDataFrame to a JSON format that Plotly can understand
+    geojson = gdf.__geo_interface__
+    
+    # Create the choropleth map using Plotly Express
+    fig = px.choropleth_mapbox(gdf, geojson=geojson, 
                            locations=gdf.index, color="price",
                            hover_name="neighborhood", 
                            hover_data={"price": True}, 
@@ -104,12 +108,33 @@ fig = px.choropleth_mapbox(gdf, geojson=geojson,
                            zoom=10,
                            labels={"price": "Average Price ($)"}
                           )
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title="Average Airbnb Prices by Neighborhood in Seattle")
+    # Display the figure in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title="Average Airbnb Prices by Neighborhood in Seattle")
+with col2: 
+    st.subheader("Total Crime (2008-2024) by Neighborhood in Seattle")
 
-# Display the figure in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-
+    # Load the Seattle GeoJSON into a GeoDataFrame
+    gdf_crime = gpd.read_file('./data/crime_geo.geojson')
+    
+    # Convert the GeoDataFrame to a JSON format that Plotly can understand
+    geojson = gdf_crime.__geo_interface__
+    # Create the choropleth map using Plotly Express
+    fig = px.choropleth_mapbox(gdf_crime, geojson=geojson, 
+                           locations=gdf.index, color="Total crime",
+                           hover_name="neighborhood", 
+                           hover_data={"Total crime": True}, 
+                           mapbox_style="carto-positron", 
+                           center={"lat": gdf_crime.geometry.centroid.y.mean(), "lon": gdf_crime.geometry.centroid.x.mean()},
+                           zoom=10,
+                           labels={"Total crime": "Total Crime Amount"}
+                          )
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title="Crime Amount (2008-2024) by Neighborhood in Seattle")
+    
+    # Display the figure in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
+    
 st.markdown("You can view the distribution of the numeric features in our dataset be selecting the feature in the selectbox below!")
 
 target = st.selectbox(
