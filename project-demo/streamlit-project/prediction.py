@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+
 ############ Const & Config ############
 MODEL_PATH = './model/model.joblib'
 DATA_PATH = './data/default_input.csv'
