@@ -70,7 +70,7 @@ if st.button("View DataFrame", type='primary', key='expd_df'):
 
 # view price by neighborhood
 st.markdown("### Price by Area")
-st.markdown("Will rental price significantly varies between area? Explore the average/median price in distinct neighbourhood!")
+st.markdown("Will rental price significantly varies between area? Explore the data in different neighbourhoods!")
 
 area = st.selectbox("Neighbourhood:", NBR)
 
@@ -83,10 +83,34 @@ area_col3.metric('Median Price', f'${num_formatter(area_res["median"])}')
 
 st.divider()
 
+st.markdown("Also, you can view the distribution of the numeric features in our dataset be selecting the feature in the box below!")
+
+target = st.selectbox(
+    "Select feature:",
+    ("accommodates", "beds", "bedrooms", "bathrooms"),
+)
+
+if target:
+    st.bar_chart(data_dis(df, target), x=target, y='count')
+
+st.divider()
+
+############ Relations to price ############
+st.markdown("## Correlation Exploration")
+st.markdown("Want to explore the relation between single feature and price? You can try it by selecting the feature you want to explore!")
+
+feature = st.selectbox(
+    "Select feature:",
+    ("accommodates", "beds", "bedrooms", "bathrooms", "rating"),
+)
+
+st.scatter_chart(sinlge_rel(feature), x=feature, y='price')
+
+st.divider()
 
 ############ Data distribution ############
 st.markdown("## Data Distribution")
-st.markdown("Interested in the data distribution? You can hover around the cursor to see the Average Price of Airbnb and Crime Situation in different neighborhood!")
+st.markdown("Interested in the data distribution? You can hover around the cursor to see the Average Price of Airbnb and Crime Situation in different neighborhoods!")
 
 col1, col2 = st.columns(2)
 
@@ -134,33 +158,3 @@ with col2:
     
     # Display the figure in Streamlit
     st.plotly_chart(fig, use_container_width=True)
-
-st.divider()
-
-st.markdown("Also, you can view the distribution of the numeric features in our dataset be selecting the feature in the box below!")
-
-target = st.selectbox(
-    "Select feature:",
-    ("accommodates", "beds", "bedrooms", "bathrooms"),
-)
-
-if target:
-    st.bar_chart(data_dis(df, target), x=target, y='count')
-
-st.divider()
-
-
-
-
-############ Relations to price ############
-st.markdown("## Correlation Exploration")
-st.markdown("Want to explore the relation between single feature and price? You can try it by selecting the feature you want to explore!")
-
-feature = st.selectbox(
-    "Select feature:",
-    ("accommodates", "beds", "bedrooms", "bathrooms", "rating"),
-)
-
-st.scatter_chart(sinlge_rel(feature), x=feature, y='price')
-
-st.divider()
