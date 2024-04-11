@@ -5,10 +5,11 @@ import joblib
 ############ Const & Config ############
 # MODEL_PATH = './model/model.joblib'
 MODEL_PATH = './model/best_gb_params_rs.joblib'
+MODEL_PATH2 = '../../modeling/bagging_stacked_model.joblib'
 # DATA_PATH = './data/default_input.csv'
 DATA_PATH = './data/default_input_opt.csv'
 NBR = ('Adams', 'Alki', 'Arbor Heights', 'Atlantic', 'Belltown', 'Bitter Lake', 'Briarcliff', 'Brighton', 'Broadview', 'Broadway', 'Bryant', 'Cedar Park', 'Central Business District', 'Columbia City', 'Crown Hill', 'Dunlap', 'East Queen Anne', 'Eastlake', 'Fairmount Park', 'Fauntleroy', 'First Hill', 'Fremont', 'Gatewood', 'Genesee', 'Georgetown', 'Green Lake', 'Greenwood', 'Haller Lake', 'Harbor Island', 'Harrison/Denny-Blaine', 'High Point', 'Highland Park', 'Holly Park', 'Industrial District', 'Interbay', 'International District', 'Laurelhurst', 'Lawton Park', 'Leschi', 'Lower Queen Anne', 'Loyal Heights', 'Madison Park', 'Madrona', 'Mann', 'Maple Leaf', 'Matthews Beach', 'Meadowbrook', 'Mid-Beacon Hill', 'Minor', 'Montlake', 'Mount Baker', 'North Admiral', 'North Beach/Blue Ridge', 'North Beacon Hill', 'North College Park', 'North Delridge', 'North Queen Anne', 'Olympic Hills', 'Phinney Ridge', 'Pike-Market', 'Pinehurst', 'Pioneer Square', 'Portage Bay', 'Rainier Beach', 'Rainier View', 'Ravenna', 'Riverview', 'Roosevelt', 'Roxhill', 'Seaview', 'Seward Park', 'South Beacon Hill', 'South Delridge', 'South Lake Union', 'South Park', 'Southeast Magnolia', 'Stevens', 'Sunset Hill', 'University District', 'Victory Heights', 'View Ridge', 'Wallingford', 'Wedgwood', 'West Queen Anne', 'West Woodland', 'Westlake', 'Whittier Heights', 'Windermere', 'Yesler Terrace')
-P_TYPE = ('Entire guesthouse', 'Private room in rental unit', 'Entire home', 'Entire guest suite', 'Entire rental unit', 'Private room in home', 'Entire bungalow', 'Private room in cottage', 'Entire condo', 'Private room', 'Private room in bungalow', 'Entire townhouse', 'Private room in condo', 'Entire cottage', 'Private room in townhouse', 'Private room in guest suite', 'Boat', 'Private room in boat', 'Entire loft', 'Shared room', 'Entire vacation home', 'Private room in treehouse', 'Entire villa', 'Entire cabin', 'Entire place', 'Tent', 'Camper/RV', 'Tiny home', 'Houseboat', 'Entire serviced apartment', 'Shared room in rental unit', 'Private room in hostel', 'Room in boutique hotel', 'Shared room in home', 'Private room in loft', 'Shared room in loft', 'Room in hotel', 'Private room in villa', 'Shared room in townhouse', 'Private room in tiny home', 'Shared room in hostel', 'Private room in bed and breakfast', 'Casa particular', 'Room in aparthotel', 'Shared room in bed and breakfast', 'Farm stay', 'Shared room in condo', 'Bus', 'Private room in casa particular', 'Private room in guesthouse', 'Private room in serviced apartment'),
+P_TYPE = ('Entire guesthouse', 'Private room in rental unit', 'Entire home', 'Entire guest suite', 'Entire rental unit', 'Private room in home', 'Entire bungalow', 'Private room in cottage', 'Entire condo', 'Private room', 'Private room in bungalow', 'Entire townhouse', 'Private room in condo', 'Entire cottage', 'Private room in townhouse', 'Private room in guest suite', 'Boat', 'Private room in boat', 'Entire loft', 'Shared room', 'Entire vacation home', 'Private room in treehouse', 'Entire villa', 'Entire cabin', 'Entire place', 'Tent', 'Camper/RV', 'Tiny home', 'Houseboat', 'Entire serviced apartment', 'Shared room in rental unit', 'Private room in hostel', 'Room in boutique hotel', 'Shared room in home', 'Private room in loft', 'Shared room in loft', 'Room in hotel', 'Private room in villa', 'Shared room in townhouse', 'Private room in tiny home', 'Shared room in hostel', 'Private room in bed and breakfast', 'Casa particular', 'Room in aparthotel', 'Shared room in bed and breakfast', 'Farm stay', 'Shared room in condo', 'Bus', 'Private room in casa particular', 'Private room in guesthouse', 'Private room in serviced apartment')
 RT_PRE = 'room_type_'
 # BT_PRE = 'bath_type_'
 BT_PRE = 'bathroom_type_'
@@ -27,8 +28,9 @@ st.sidebar.markdown("Predict you ideal Airbnb rental price using our regression 
 
 # load the trained model
 @st.cache_resource
-def load_model():
-    return joblib.load(MODEL_PATH)
+def load_model(no=1):
+    path = MODEL_PATH if no == 1 else MODEL_PATH2
+    return joblib.load(path)
 
 # load default user input (as a DataFrame)
 @st.cache_data
@@ -94,7 +96,7 @@ pt_input = st.selectbox("Poperty Type", P_TYPE, key="selectbox_poperty")
 #     return RT_PRE+rt
 
 if st.button("Predict", type='primary'):
-    model = load_model()
+    model = load_model(1)
     df_input = default_input()
 
     st.divider()
