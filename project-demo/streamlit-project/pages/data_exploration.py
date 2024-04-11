@@ -134,8 +134,10 @@ with col2:
     
     # Display the figure in Streamlit
     st.plotly_chart(fig, use_container_width=True)
-    
-st.markdown("You can view the distribution of the numeric features in our dataset be selecting the feature in the selectbox below!")
+
+st.divider()
+
+st.markdown("Also, you can view the distribution of the numeric features in our dataset be selecting the feature in the selectbox below!")
 
 target = st.selectbox(
     "Select feature:",
