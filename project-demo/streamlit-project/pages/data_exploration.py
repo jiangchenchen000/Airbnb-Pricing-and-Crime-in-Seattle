@@ -93,7 +93,7 @@ target = st.selectbox(
 if target:
     st.bar_chart(data_dis(df, target), x=target, y='count')
 
-st.divider()
+# st.divider()
 
 ############ Relations to price ############
 st.markdown("## Correlation Exploration")
@@ -106,7 +106,7 @@ feature = st.selectbox(
 
 st.scatter_chart(sinlge_rel(feature), x=feature, y='price')
 
-st.divider()
+# st.divider()
 
 ############ Data distribution ############
 st.markdown("## Data Distribution")
