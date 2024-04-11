@@ -86,7 +86,7 @@ st.divider()
 
 ############ Data distribution ############
 st.markdown("## Data Distribution")
-st.markdown("Interested in the data distribution? You can hover around and see the Average Price of Airbnb and Crime Situation in different neighborhood!")
+st.markdown("Interested in the data distribution? You can hover around the cursor to see the Average Price of Airbnb and Crime Situation in different neighborhood!")
 
 col1, col2 = st.columns(2)
 
@@ -137,7 +137,7 @@ with col2:
 
 st.divider()
 
-st.markdown("Also, you can view the distribution of the numeric features in our dataset be selecting the feature in the selectbox below!")
+st.markdown("Also, you can view the distribution of the numeric features in our dataset be selecting the feature in the box below!")
 
 target = st.selectbox(
     "Select feature:",
@@ -153,7 +153,7 @@ st.divider()
 
 
 ############ Relations to price ############
-st.markdown("## Relation Exploration")
+st.markdown("## Correlation Exploration")
 st.markdown("Want to explore the relation between single feature and price? You can try it by selecting the feature you want to explore!")
 
 feature = st.selectbox(
