@@ -306,5 +306,5 @@ airbnb-prediction
 * [Streamlit](https://streamlit.io/)
 * [Docker](https://www.docker.com/)
 * [GitHub repository](https://github.com/jiangchenchen000/Urban-Analytics-Crime-Community-Service-and-Airbnb-Pricing-in-Seattle) of our project
-* [Online Streamlit application](https://airbnb-pricing.streamlit.app/)
+* [Online Streamlit application](https://airpricing.streamlit.app/)
 
