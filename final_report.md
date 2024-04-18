@@ -1,16 +1,16 @@
 # Airbnb Pricing in Seattle
 
-Group members: Chenchen Jiang, Hui Du, Jianjian Liu, Jiayang Liu
+**Group members**: Chenchen Jiang, Hui Du, Jianjian Liu, Jiayang Liu
 
 
 
-**Abstract**: In this project, we analyzed the relationships between consumer concerned features (accommodates, bedroom number, bathroom number, beds number, review rating score, neighborhood, room type and bathroom type) and Airbnb rental price using three different regression models. Raw dataset from Airbnb was cleansed by replacing and dropping missing values, and categorical features were converted into one-hot encoding format. We found that gradient boosted model shown best preformance by evaluating all trained models using parameters including MSE, MAE, R2 and residual curve. Furthermore, to provide user-friendly interface in applying our model, an online application was build by Streamlit, and we also generated a docker image for our applicaiton. In summary, this project represents an innovative and beneficial use of data science as it empowers residents and visitors to make data-informed decisions regarding their accommodation choices, thus, enhancing the living and travel experience in the Seattle area.
+**Abstract**: In this project, we analyzed the relationships between consumer concerned features (accommodates, bedroom number, bathroom number, beds number, review rating score, neighborhood, room type and bathroom type) and lasted Airbnb rental price (2023-2024) in Seattle. We also considered crime data (2008-2024) as a potential factor by merging it into the main Airbnb dataset.  Raw dataset from [Airbnb](https://insideairbnb.com/) and [Data.Seattle.gov](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5/about_data) were cleansed by replacing and dropping missing values, and categorical features were converted into one-hot encoding format. We explored both of Airbnb and Crime datasets through visualization to better understand the data distribution before modelling. We utilized three machine learning models—Linear Regression, Random Forest, and Gradient Boosting—for predicting suggested listing prices. Techniques such as Stacking and Bagging were applied respectively to optimize model performance. As a result, the Gradient Boosted model showed the best performance, evaluated using parameters including MSE, MAE, R2, and the residual curve. Furthermore, to provide user-friendly interface in applying our model, an online application was build by Streamlit, and we also generated a docker image for our applicaiton. In summary, this project represents an innovative and beneficial use of data science as it empowers property owners to make data-informed decisions before they list their homes.
 
 
 
 ## Introduction
 
-Airbnb offers alternatives to the traditional hotel. It's an online application which enables people to lease or  rent short-term homestays, apartments and hotel rooms. As Airbnb grows into a global phenomenon, it will be useful to provide people with a price-comparison tool in choosing their rentals. In this project, we will explore the key factors which could make influnce on Airbnb rental prices, and our aim is enhancing the living and travel experience in the Seattle area.
+Airbnb offers alternatives to the traditional hotel. It's an online application which enables people to lease or  rent short-term homestays, apartments and hotel rooms. As Airbnb grows into a global phenomenon, it will be useful to provide people with a price-comparison tool in choosing their rentals. In this project, we will explore the key factors which could make influnce on Airbnb rental prices, and our aim is to provide insightful information for the property owners before they enter Seattle Airbnb market.
 
 The primary objective of this project is to predict the listing distribution and the price fluctuation of Airbnb in Seattle. This exploration will be accomplished by analyzing the relations among rental options (such as area, room type, bedroom number and so on) and price of Airbnb rooms. This analysis and application will provide valuable insights for guiding room selection, devising effective marketing strategies and enhancing homestay sales predictions.
 
@@ -30,19 +30,22 @@ In conclusion, we trained three different regression models, which showed accept
 
 ## Data Cleasing
 
+
 ### Feature Selection
 
 The ultimate goal of our project is to predict the price of Airbnb room for customers by giving information they care about when looking for a rental. In this way, features that customers will probably be interested in, including room type, accommodates, neighborhood, review ratings and so on, were selected for further analysis.
 
-By exploring the target dataset, we found that a few of information are provided explictly, including neighbourhood, review rating score, room type. However, other information users will be interested, such as bathroom type and bedroom and bathroom numbers, However, other information users will be interested, such as beds number, bedroom number and bathroom type, are implicitly included in columns like `name` and `bathroom_text`
+By exploring the Airbnb Listing dataset, we found that a few of information are provided explictly, including neighbourhood, review rating score, room type. However, other information users will be interested, such as bathroom type and bedroom and bathroom numbers, However, other information users will be interested, such as beds number, bedroom number and bathroom type, are implicitly included in columns like `name` and `bathroom_text`
 
 As a result, all selected features are: neighborhood, room type, bathroom type, accommodates, bedroom number, bathroom number, beds number, and review rating. Among these features, 5 of them are numeric features (accommodates, bedroom number, bathroom number, beds number, and review rating), and other 3 (neighborhood, room type and bathroom type) are categorical features.
 
 
+For the extra Crime dataset, we have retained several key features for further use: report datetime, crime category, offense parent group, offense, address, longitude, and latitude, which are all categorical features. 
+
 
 ### Handling of Missing Values and Information Extraction
 
-Our goal will be given the prediction of `price` in this project, since 378 of 6882 rooms have missing `price` values, these records will be simply removed from further analysis. Since some of the selected features are implicted included in more than one columns, our next task is to extract as much information as we can to fill our features with valid and reasonable values. In summary, the method and logic we applied were listed below:
+Our goal will be given the prediction of `price` in this project, for Airbnb Listing dataset, less than 5% values are missing in each feature, these records will be simply removed from further analysis. Since some of the selected features are implicted included in more than one columns, our next task is to extract as much information as we can to fill our features with valid and reasonable values. In summary, the method and logic we applied were listed below:
 
 * **neighborhood**: explicitly included in the `neighbourhood` column
 * **room type**: explicitly included in the `room_type` column
@@ -95,13 +98,26 @@ flowchart LR
     B -- No ------> E[End]
 ```
 
-In summary,  about 20% of records has missing values and were dropped before we diving deeper.
+![Alt text](assets/Picture1.png)
+
+
+For the extra Crime dataset, only some address entries are missing (NA), but as these constitute only 4.67% of the data, we have opted to drop the rows with missing addresses.
+
+* **report datetime**: explicitly included in the `Report DateTime` column
+* **crime category**: explicitly included in the `Crime Against Category` column
+* **offense parent group**: explicitly included in the `Offense Parent Group` column
+* **offense**: explicitly included in the `Offense` column
+* **address**: explicitly included in the `100 Block Address` column
+* **longitude**: explicitly included in the `Longitude` column
+* **latitude**: explicitly included in the `Latitude` column
+
+![Alt text](assets/Picture2.png)
+
+In summary,  about less than 5% of records of has missing values and were dropped before we diving deeper.
 
 ![image-20240401151201986](assets/image-20240401151201986.png)
 
-> Overview of the dataset after missing values were dropped
-
-
+> Overview of the dataset after missing values were dropped.
 
 ### Data Type and Encoding
 
@@ -113,6 +129,8 @@ At this point, missing values are either filled with information extracted from 
 Finally, our dataset for training the regression model includes 100 columns with 8500+ valid records. A brief summary of the dataset is listed below:
 
 ![image-20240401151247372](assets/image-20240401151247372.png)
+
+![image](assets/Picture3.png)
 
 > Overview of the dataset we used to train the model
 
