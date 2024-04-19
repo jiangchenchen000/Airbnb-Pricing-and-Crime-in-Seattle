@@ -115,6 +115,8 @@ For the extra Crime dataset, only some address entries are missing (NA), but as 
 
 In summary,  about less than 5% of records of has missing values and were dropped before we diving deeper.
 
+
+
 ![image-20240401151201986](assets/image-20240401151201986.png)
 
 > Overview of the dataset after missing values were dropped.
@@ -130,9 +132,8 @@ Finally, our dataset for training the regression model includes 100 columns with
 
 ![image-20240401151247372](assets/image-20240401151247372.png)
 
-![image](assets/Picture3.png)
-
 > Overview of the dataset we used to train the model
+
 
 
 
@@ -157,6 +158,14 @@ We next analyzed the possible relations between our selected features (both nume
 ![pre_relation](assets/pre_relation.png)
 
 > Preliminary relation analysis
+
+![property_type](assets/property_type.png)
+
+> Preliminary relation analysis
+
+![](assets/airbnb_price_map.png)
+
+![](assets/total_crime_map.png)
 
 
 

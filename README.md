@@ -25,7 +25,6 @@ location, offense types, emergency food location. This analysis and application 
 insights for guiding neighborhood security plans, devising effective marketing strategies and enhancing
 homestay sales predictions.
 
-## Methodology
 Our analysis will rely on several key datasets, including Airbnb listings, crime reports, and locations of
 emergency food supplies. To gain a comprehensive understanding of the data and establish
 relationships between variables, we will employ data mining techniques and exploratory data analysis.
