@@ -97,8 +97,8 @@ flowchart LR
     F --> E
     B -- No ------> E[End]
 ```
+<img width="500" alt="Picture1" src="https://github.com/jiangchenchen000/Airbnb-Pricing-and-Crime-in-Seattle/assets/122926291/38cb7513-24c0-4e42-9887-945ab4463b46">
 
-![Alt text](assets/Picture1.png)
 
 
 For the extra Crime dataset, only some address entries are missing (NA), but as these constitute only 4.67% of the data, we have opted to drop the rows with missing addresses.
@@ -111,7 +111,8 @@ For the extra Crime dataset, only some address entries are missing (NA), but as 
 * **longitude**: explicitly included in the `Longitude` column
 * **latitude**: explicitly included in the `Latitude` column
 
-![Alt text](assets/Picture2.png)
+<img width="500" alt="Picture2" src="https://github.com/jiangchenchen000/Airbnb-Pricing-and-Crime-in-Seattle/assets/122926291/79dfd7d3-c5ef-42fc-85e5-7ff125088a6c">
+
 
 In summary,  about less than 5% of records of has missing values and were dropped before we diving deeper.
 
@@ -130,7 +131,6 @@ Finally, our dataset for training the regression model includes 100 columns with
 
 ![image-20240401151247372](assets/image-20240401151247372.png)
 
-![image](assets/Picture3.png)
 
 > Overview of the dataset we used to train the model
 
